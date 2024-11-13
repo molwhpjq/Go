@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小说管理系统</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: burlywood;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .swiper-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .swiper-wrapper {
+            width: 40%;
+        }
+        .carousel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48vh;
+            width:88%;
+            background-color: lightsteelblue;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel {
+            width: 60%;
+            height: 80%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .carousel img {
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+        .carousel img.active {
+            opacity: 1; /* Show active image */
+        }
+        .carousel .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            z-index: 1;
+        }
+        #leftArrow {
+            left: -20px;
+        }
+        #rightArrow {
+            right: 20px;
+        }
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #000;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<h1>小说推荐</h1>
+
+<div class="search-container">
+    <form >
+        <input type="text" placeholder="Search by book name" name="name">
+        <button type="submit" formmethod="post">Search</button>
+    </form>
+</div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        {{range .recommendedBooks}}
+            <div class="swiper-slide">
+                <h2>{{.Name}}</h2>
+                <p>作者：{{.Author}}</p>
+                <p>价格：{{.Price}}</p>
+                <p>出版社：{{.Publisher}}</p>
+                <p>出版时间：{{.Publishtime}}</p>
+            </div>
+        {{end}}
+    </div>
+    <div class="carousel-container">
+        <div class="carousel" id="carousel">
+            <img src="/static/img/novel1.jpg" alt="背景图1" class="active">
+            <img src="/static/img/novel2.jpg" alt="背景图2">
+            <img src="/static/img/novel3.jpg" alt="背景图3">
+            <img src="/static/img/novel4.jpg" alt="背景图4">
+            <div class="arrow" id="leftArrow">&#10094;</div> <!-- left arrow -->
+            <div class="arrow" id="rightArrow">&#10095;</div> <!-- right arrow -->
+        </div>
+    </div>
+
+</div>
+
+<div class="pagination">
+    <div style="text-align: center; margin-top: 20px;">
+        <ul style="display: flex; justify-content: center; list-style: none; padding: 0;">
+            {{ if compare .FirstPage true}}
+                <li style="margin-right: 10px;"></li>
+
+            {{else}}
+                <li style="margin-right: 10px; cursor: not-allowed;"><a href="/ViewBooks?pageIndex={{.pageIndex|ShowLastPage}}">上一页</a></li>
+            {{end}}
+
+            {{ if compare .EndPage true }}
+                <li style="cursor: not-allowed;">下一页</li>
+            {{else}}
+                <li style="margin-right: 10px; cursor: not-allowed;"><a href="/ViewBooks?pageIndex={{.pageIndex|ShowNextPage}}">下一页</a></li>
+            {{end}}
+        </ul>
+    </div>
+</div>
+
+
+<script>
+        var images = document.querySelectorAll('.carousel img');
+        var currentIndex = 0;
+        var leftArrow = document.getElementById('leftArrow');
+        var rightArrow = document.getElementById('rightArrow');
+        var intervalId;
+
+        function showImage(index) {
+        images.forEach(function(image) {
+            image.classList.remove('active');
+        });
+        images[index].classList.add('active');
+    }
+
+        function startCarousel() {
+        intervalId = setInterval(function() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }, 2000);
+    }
+
+        startCarousel();
+
+        function stopCarousel() {
+        clearInterval(intervalId);
+    }
+
+        leftArrow.addEventListener('click', function() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+        stopCarousel();
+    });
+
+        rightArrow.addEventListener('click', function() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+        stopCarousel();
+    });
+</script>
+</body>
+</html>

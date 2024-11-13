@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小说系统</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js">
+
+    </script>
+</head>
+<body>
+<style>
+    body {
+        background-image: url('static/img/a4.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+<h1>用户列表</h1>
+<div class="user-list">
+<ul id="user-list"></ul>
+</div>
+<script>
+    $(document).ready(function() {
+        // 发送AJAX请求到后端获取用户信息
+        $.ajax({
+            url: '/getall', // 后端请求地址，根据实际情况修改
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                alert(data)
+                $.each(data, function (index, user) {
+                    var listItem = $('<li>ID: ' + user.id + ', Name: ' + user.uname + ', Sex:' + user.usex + ', </li>');
+                    var editLink = $(' <button>修改</button>').on('click', function () {
+                        alert('修改用户 ID: ' + user.id);
+                        window.location.href = "/update.html";
+                    });
+                    // $.ajax({
+                    //     url:"/edituser/" + user.id,
+                    //     type:"EDIT",
+                    //     sucess:function(){
+                    //         //如果修改成功，则跳转对应的列表项
+                    //         listItem.remove();
+                    //     }
+                    // })
+                   // var deleteLink = $(' <a href="#"> 删除</a>').on('click', function () {
+                      //  alert('删除用户 ID: ' + user.id);
+                    var deleteLink = $('<button>删除</button>').on('click',function(){
+                    alert('删除用户 ID: ' + user.id);
+                $.ajax({
+                    url:"/deleteuser/" + user.id,
+                    type:"DELETE",
+                    sucess:function(){
+                        //如果删除成功，则移除对应的列表项
+                        listItem.remove();
+                    }
+                    })
+
+                    });
+                    listItem.append(editLink).append(deleteLink);
+                    $('#user-list').append(listItem);
+                });
+            },
+            error: function(xhr, status, error) {
+                alert("出错了")
+                console.log('Error occurred: ' + error);
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

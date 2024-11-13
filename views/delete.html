@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息·删除</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function deleteUser(id) {
+        if (confirm("Are you sure you want to delete this user?")) {
+            // Send an AJAX request to the server to delete the user
+            $.ajax({
+                type: "DELETE",
+                url: "/personalInformation/delete?id=" + id,
+                success: function(response) {
+                    // Handle the response, for example, you can remove the deleted user from the table
+                    // Reload the page or update the user list
+                    location.reload(); // Reload the page to reflect the changes
+                },
+                error: function(error) {
+                    // Handle the error, for example, show an error message to the user
+                    console.log("Error deleting user: " + error);
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+
+.form {
+    width: 300px; /* 可以根据需要调整宽度 */
+    margin: 0 auto; /* 水平居中 */
+}
+
+.user-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 根据需要调整高度 */
+}

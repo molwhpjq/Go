@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小说系统·用户入口</title>
+    <style>
+        body {
+            background-color:darkgray; /* 设置背景颜色 */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto; /* 设置按钮组的边距和位置 */
+        }
+        .button-container button {
+            width: 150px; /* 设置按钮的宽度 */
+            height: 30px; /* 设置按钮的高度 */
+            background-color: #007BFF; /* 设置按钮的背景颜色 */
+            color: white; /* 设置按钮的文本颜色 */
+            border: none; /* 无边框 */
+            padding: 10px; /* 设置内边距 */
+            text-align: center; /* 设置文本居中 */
+            text-decoration: none; /* 无下划线 */
+            cursor: pointer; /* 鼠标悬停时变为手型 */
+        }
+        .button-container button:hover {
+            background-color: #66a6ff; /* 鼠标悬停时的背景颜色 */
+        }
+    </style>
+</head>
+<body>
+<div class="button-container"> <!-- 设置按钮组样式 -->
+    <button onclick="window.location.href='/register.html'">注册</button> <!-- 添加用户入口按钮 -->
+    <button onclick="window.location.href='/login.html'">登录</button> <!-- 添加管理员入口按钮 -->
+</div>
+</body>
+</html>

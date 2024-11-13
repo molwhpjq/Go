@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>分享图书</h1>
+
+<form  >
+    <label for="title">书名：</label>
+    <input type="text" id="title" name="title"><br>
+    <label for="author">作者：</label>
+    <input type="text" id="author" name="author"><br>
+    <label for="publisher">出版社：</label>
+    <input type="text" id="publisher" name="publisher"><br>
+    <label for="category">分类：</label>
+    <input type="text" id="category" name="category"><br>
+    <button id="addBtn" type="submit" formmethod="post" >分享</button>
+</form>
+<script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        var title = document.getElementById("title").value;
+        var author = document.getElementById("author").value;
+        var publisher = document.getElementById("publisher").value;
+        var category = document.getElementById("category").value;
+
+        if (title.trim() === '' || author.trim() === '' || publisher.trim() === '' || category.trim() === '') {
+            alert("所有字段都是必填的");
+            event.preventDefault(); // 阻止表单提交
+        } else {
+            alert("分享成功！");
+        }
+    });
+
+</script>
+</body>
+</html>

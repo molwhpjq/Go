@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小说系统·个人简介</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>个人</h1>
+
+<form id="profileForm" method="post" action="/profile">
+    <label for="username">用户名:</label>
+    <input type="text" name="username"  value="{{.username}}" required><br>
+
+    <label for="bio">个人简介:</label>
+    <textarea id="bio" name="bio"></textarea><br>
+    <button type="submit">编辑</button>
+</form>
+
+<style>
+    body {
+        background-image: url('static/img/a5.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<h2>个人发布</h2>
+{{range .Profiles}}
+    <ul>
+        <li>{{.Introduction }}</li>
+    </ul>
+{{end}}
+
+</body>
+</html>

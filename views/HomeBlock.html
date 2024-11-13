@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小说系统导航栏</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+  body {
+      background-image: url('static/img/a2.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+  }
+  .carousel-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50vh;
+      width: 100%;
+      border: 0;
+      border-radius:0; /* Add border radius */
+      overflow: hidden; /* Hide overflowing content */
+      position: relative; /* Set position for absolute children */
+  }
+  .carousel {
+      width: 60%;
+      height: 90%;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.5s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative; /* Set position for absolute children */
+  }
+  .carousel img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.5s ease-in-out; /* Add transition effect */
+      opacity: 0; /* Hide images by default */
+  }
+  .carousel img.active {
+      opacity: 1;
+  }
+  .carousel .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      z-index: 1; /* Ensure arrows are above images */
+  }
+  #leftArrow {
+      left: -20px;
+  }
+  #rightArrow {
+      right: -20px;
+  }
+</style>
+</head>
+<body>
+
+<div style="display: flex; justify-content: center;"> <!-- 设置按钮组在中间 -->
+    <button onclick="window.location.href='/SelectPage'">用户入口</button> <!-- 添加用户入口按钮 -->
+    <button onclick="window.location.href='/AdminEntry'">管理员入口</button> <!-- 添加管理员入口按钮 -->
+</div>
+<div class="carousel-container">
+    <div class="carousel" id="carousel">
+        <img src="/static/img/novel6.jpg" alt="背景图1" class="active">
+        <img src="/static/img/novel7.jpg" alt="背景图2">
+        <img src="/static/img/novel8.jpg" alt="背景图3">
+        <img src="/static/img/novel9.jpg" alt="背景图4">
+        <img src="/static/img/novel0.jpg" alt="背景图4">
+        <div class="arrow" id="leftArrow">&#10094;</div>
+        <div class="arrow" id="rightArrow">&#10095;</div>
+    </div>
+</div>
+    <script>
+        var images = document.querySelectorAll('.carousel img');
+        var currentIndex = 0;
+        var leftArrow = document.getElementById('leftArrow');
+        var rightArrow = document.getElementById('rightArrow');
+        var intervalId;
+
+        function showImage(index) {
+        images.forEach(function(image) {
+            image.classList.remove('active');
+        });
+        images[index].classList.add('active');
+    }
+
+        function startCarousel() {
+        intervalId = setInterval(function() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }, 2000);
+    }
+        startCarousel();
+        function stopCarousel() {
+        clearInterval(intervalId);
+    }
+        leftArrow.addEventListener('click', function() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+        stopCarousel();
+    });
+        rightArrow.addEventListener('click', function() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+        stopCarousel();
+    });
+</script>
+</body>
+</html>

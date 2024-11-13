@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小说管理系统</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .container {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        body {
+            background-image: url('static/img/book4.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>用户登录</h2>
+    <form id="loginForm">
+        <input type="text" id="loginUsername" placeholder="用户名"><br>
+        <input type="password" id="loginPassword" placeholder="密码"><br>
+        <button type="submit" id="loginBtn">登录</button>
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        $("#loginForm").submit(function(e) {
+            e.preventDefault();
+            var userType = $("#userType").val();
+            var username = $("#loginUsername").val();
+            var password = $("#loginPassword").val();
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                contentType: "application/json",
+                data: JSON.stringify({Uname: username, Upwd: password}),
+                success: function(response) {
+                    if (response.success) {
+                        alert("登录成功！");
+                        window.location.href = "/UserPage"; // 重定向到用户页面
+                    } else {
+                        alert("登录失败：" + response.message);
+                    }
+                },
+                error: function() {
+                    alert("登录失败：请求错误");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
+

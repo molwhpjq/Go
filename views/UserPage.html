@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小说管理系统</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: snow;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+            justify-content: space-around; /* 让链接平均分布 */
+            align-items: center;
+            border-bottom: 2px solid #111; /* Add border at the bottom */
+        }
+        .navbar a {
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .carousel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            width: 90%;
+            background-color: lightsteelblue; /* Add background color */
+            border: 2px solid #ccc; /* Add border */
+            border-radius: 10px; /* Add border radius */
+            overflow: hidden; /* Hide overflowing content */
+            position: relative; /* Set position for absolute children */
+        }
+        .carousel {
+            width: 60%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* Set position for absolute children */
+        }
+        .carousel img {
+            width: 80%;
+            height:100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.5s ease-in-out; /* Add transition effect */
+            opacity: 0; /* Hide images by default */
+        }
+        .carousel img.active {
+            opacity: 1; /* Show active image */
+        }
+        .carousel .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            z-index: 1; /* Ensure arrows are above images */
+        }
+        #leftArrow {
+            left: -10px;
+        }
+        #rightArrow {
+            right: -10px;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <a href="/ViewBooks">查看图书</a>
+    <a href="/ShareBooks">分享图书</a>
+    <a href="/UserShow">个人</a>
+    <a href="/profile">查看个人发布</a>
+    <a href="/login">退出登录</a>
+</div>
+<div class="carousel-container">
+    <div class="carousel" id="carousel">
+        <img src="/static/img/novel1.jpg" alt="背景图1" class="active">
+        <img src="/static/img/novel2.jpg" alt="背景图2">
+        <img src="/static/img/novel3.jpg" alt="背景图3">
+        <img src="/static/img/novel4.jpg" alt="背景图4">
+        <div class="arrow" id="leftArrow">&#10094;</div> <!-- left arrow -->
+        <div class="arrow" id="rightArrow">&#10095;</div> <!-- right arrow -->
+    </div>
+</div>
+<script>
+    var images = document.querySelectorAll('.carousel img');
+    var currentIndex = 0;
+    var leftArrow = document.getElementById('leftArrow');
+    var rightArrow = document.getElementById('rightArrow');
+    var intervalId;
+
+    function showImage(index) {
+        images.forEach(function(image) {
+            image.classList.remove('active');
+        });
+        images[index].classList.add('active');
+    }
+
+    function startCarousel() {
+        intervalId = setInterval(function() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }, 3000);
+    }
+
+    startCarousel();
+
+    function stopCarousel() {
+        clearInterval(intervalId);
+    }
+
+    leftArrow.addEventListener('click', function() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+        stopCarousel();
+    });
+
+    rightArrow.addEventListener('click', function() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+        stopCarousel();
+    });
+
+</script>
+</body>
+</html>

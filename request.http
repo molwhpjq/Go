@@ -1,0 +1,18 @@
+PUT http://localhost:8082/updateUser
+Content-Type: application/json
+
+{
+  "id": 1,
+  "uname":"lwh",
+  "upwd": "123"
+}
+###
+POST http://localhost:8082/page
+Content-type:application/json
+
+{
+"pagenum": 6,
+"pagesize": 2
+}
+
+###
